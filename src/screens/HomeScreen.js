@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import {View, Text, SafeAreaView, Platform, FlatList} from 'react-native';
 import {SearchBar, Card, ListItem, Button, Icon} from 'react-native-elements';

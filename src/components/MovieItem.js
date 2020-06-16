@@ -9,6 +9,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginVertical: 10,
   },
+  mvText: {
+    fontSize: 16,
+    color: '#92eb34',
+  },
+  mvType: {
+    color: '#92eb34',
+    fontSize: 20,
+  },
+  mvInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });
 export default function MovieItem(props) {
   const {Title, Poster, Year, Type, imdbID} = props;
@@ -19,10 +31,10 @@ export default function MovieItem(props) {
       image={{
         uri: Poster,
       }}>
-      <Text style={{marginBottom: 10}}>
-        The idea with React Native Elements is more about component structure
-        than actual design.
-      </Text>
+      <View style={styles.mvInfo}>
+        <Text style={styles.mvType}>{`${Type}`}</Text>
+        <Text style={styles.mvText}>{Year}</Text>
+      </View>
       <TouchableOpacity onPress={onPress} style={styles.addBtn}>
         <Antdesign name="hearto" size={20} color="#000" />
       </TouchableOpacity>
