@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import {View, Text} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -14,7 +13,19 @@ const HomeStack = createStackNavigator();
 const HomeStackScreen = () => {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="CouchBuddies" component={HomeScreen} />
+      <HomeStack.Screen
+        name="CouchBuddies"
+        options={{
+          headerStyle: {
+            backgroundColor: '#7d43d9',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+        component={HomeScreen}
+      />
     </HomeStack.Navigator>
   );
 };
@@ -44,7 +55,7 @@ export default function Root() {
     <NavigationContainer>
       <TabNavigator.Navigator
         tabBarOptions={{
-          activeTintColor: '#e91e63',
+          activeTintColor: '#7d43d9',
         }}>
         <TabNavigator.Screen
           name="Home"
@@ -63,19 +74,6 @@ export default function Root() {
             tabBarIcon: ({color, size}) => (
               <MaterialCommunityIcons
                 name="format-list-bulleted"
-                size={size}
-                color={color}
-              />
-            ),
-          }}
-        />
-        <TabNavigator.Screen
-          name="Profile"
-          component={ProfileStackScreen}
-          options={{
-            tabBarIcon: ({color, size}) => (
-              <MaterialCommunityIcons
-                name="account"
                 size={size}
                 color={color}
               />
