@@ -1,43 +1,35 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {Card, Button, Icon} from 'react-native-elements';
 import Antdesign from 'react-native-vector-icons/AntDesign';
+import {POSTER_BASE} from '../config';
+
 const styles = StyleSheet.create({
-  addBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  card: {
+    flex: 1,
     justifyContent: 'center',
-    marginVertical: 10,
-  },
-  mvText: {
-    fontSize: 16,
-    color: '#92eb34',
-  },
-  mvType: {
-    color: '#92eb34',
-    fontSize: 20,
-  },
-  mvInfo: {
-    flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: 5,
+  },
+  image: {
+    borderRadius: 50,
+    flex: 1,
+    width: 320,
+    height: 500,
   },
 });
+
 export default function MovieItem(props) {
-  const {Title, Poster, Year, Type, imdbID} = props;
+  const {title, poster} = props;
   const onPress = () => {};
   return (
-    <Card
-      title={Title}
-      image={{
-        uri: Poster,
-      }}>
-      <View style={styles.mvInfo}>
-        <Text style={styles.mvType}>{`${Type}`}</Text>
-        <Text style={styles.mvText}>{Year}</Text>
-      </View>
-      <TouchableOpacity onPress={onPress} style={styles.addBtn}>
-        <Antdesign name="hearto" size={20} color="#000" />
+    <View style={styles.card}>
+      <TouchableOpacity onPress={onPress}>
+        <Image
+          source={{uri: `${POSTER_BASE}/w500/${poster}`}}
+          style={styles.image}
+        />
       </TouchableOpacity>
-    </Card>
+    </View>
   );
 }
