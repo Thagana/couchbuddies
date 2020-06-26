@@ -1,7 +1,6 @@
+// @flow
 import React from 'react';
-import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {Card, Button, Icon} from 'react-native-elements';
-import Antdesign from 'react-native-vector-icons/AntDesign';
+import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {POSTER_BASE} from '../config';
 
 const styles = StyleSheet.create({
@@ -20,8 +19,39 @@ const styles = StyleSheet.create({
 });
 
 export default function MovieItem(props) {
-  const {title, poster} = props;
-  const onPress = () => {};
+  const {
+    title,
+    poster,
+    appcon,
+    id,
+    adult,
+    genre_ids,
+    original_language,
+    overview,
+    original_title,
+    popularity,
+    release_date,
+    vote_average,
+    backdrop_path,
+  } = props;
+  const {navigation} = appcon;
+  const onPress = () => {
+    const item = {
+      poster: `${POSTER_BASE}/w500/${poster}`,
+      title,
+      id,
+      adult,
+      genre_ids,
+      original_language,
+      overview,
+      original_title,
+      popularity,
+      release_date,
+      vote_average,
+      backdrop_path: `${POSTER_BASE}${backdrop_path}`,
+    };
+    navigation.navigate('Movie', {item});
+  };
   return (
     <View style={styles.card}>
       <TouchableOpacity onPress={onPress}>
