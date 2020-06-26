@@ -1,8 +1,7 @@
 // @flow
 import React, {useEffect} from 'react';
 import {View, SafeAreaView, Platform, FlatList, StyleSheet} from 'react-native';
-import {SearchBar, Card, ListItem, Button, Icon} from 'react-native-elements';
-import {getMovies} from '../functions/getMovies';
+import {SearchBar} from 'react-native-elements';
 import Movie from '../components/MovieItem';
 import Snackbar from 'react-native-snackbar';
 import {loadPopular} from '../config';
@@ -26,29 +25,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
   const [search, setSearch] = React.useState('');
-  const [movies, setMovies] = React.useState([]);
   const [movielist, setMovieList] = React.useState([]);
-
-  const handleSearch = (val) => {
-    // getMovies(val.nativeEvent.text)
-    //   .then((response) => {
-    //     if (response.status === 200) {
-    //       if (response.data.Response === 'True') {
-    //         setMovies(response.data.Search);
-    //       } else {
-    //         // key
-    //       }
-    //     } else {
-    //       Snackbar.show({
-    //         text: 'Something went wrong',
-    //         duration: Snackbar.LENGTH_SHORT,
-    //       });
-    //     }
-    //   })
-    //   .catch((error) => console.log(error));
-  };
+  const handleSearch = (val) => {};
 
   useEffect(() => {
     loadPopular()
@@ -80,7 +60,21 @@ export default function HomeScreen() {
       <FlatList
         data={movielist.results}
         renderItem={({item}) => (
-          <Movie poster={item.poster_path} title={item.title} />
+          <Movie
+            poster={item.poster_path}
+            title={item.title}
+            appcon={props}
+            id={item.id}
+            adult={item.adult}
+            genre_ids={item.genre_ids}
+            original_language={item.original_language}
+            overview={item.overview}
+            original_title={item.original_title}
+            popularity={item.popularity}
+            release_date={item.release_date}
+            vote_average={item.vote_average}
+            backdrop_path={item.backdrop_path}
+          />
         )}
         keyExtractor={(item, index) => index.toString()}
       />
