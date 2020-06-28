@@ -6,9 +6,9 @@ A movie recommandation app written in React Native
     <img src="./app_assets/couch.png" alt="CouchBuddies Logo">
 </div>
 <div style="max-width: 800px;margin: auto;">
-    <img src="./app_assets/screen_2.jpeg" alt="screen shot 1" style="width: 200px; height: 400px;">
-        <img src="./app_assets/screen_1.jpeg" alt="screen shot 1" style="width: 200px; height: 400px;">
-            <img src="./app_assets/screen_3.jpeg" alt="screen shot 1" style="width: 200px; height: 400px;">
+    <img src="./app_assets/screen_2.jpeg" alt="screen shot 1" style="width: 100px; height: 280px;">
+        <img src="./app_assets/screen_1.jpeg" alt="screen shot 1" style="width: 100px; height: 280px;">
+            <img src="./app_assets/screen_3.jpeg" alt="screen shot 1" style="width: 100px; height: 280px;">
 <div>
 
 ## Running the app
