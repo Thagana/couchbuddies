@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
-import {POSTER_BASE} from '../config';
+import {POSTER_BASE} from '../configs/app';
 
 const styles = StyleSheet.create({
   card: {
