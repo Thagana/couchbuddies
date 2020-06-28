@@ -1,11 +1,24 @@
 // @flow
+// Colors
+export const BASE_COLOR: String = '#037bfc';
+export const PRIMARY_COLOR: String = '#7d43d9';
 
-const local: boolean = true;
-let API_URL: sring = '';
-if (local) {
-  API_URL = '127.0.0.1:5000';
-} else {
-  API_URL = ' https://couchbuddies.herokuapp.com/';
-}
+export const POSTER_BASE = 'http://image.tmdb.org/t/p';
+export const API_KEY: String = '844dba0bfd8f3a4f3799f6130ef9e335';
+export const API_ENDPOINT = 'https://api.themoviedb.org/3/';
 
-export default API_URL;
+export const searchMovie = (keyword) => {
+  return fetch(
+    `${API_ENDPOINT}search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${keyword}`,
+  )
+    .then((response) => response.json())
+    .then((data) => data)
+    .catch((error) => error);
+};
+
+export const loadPopular = () => {
+  return fetch(`${API_ENDPOINT}movie/popular?api_key=${API_KEY}`)
+    .then((response) => response.json())
+    .then((data) => data)
+    .catch((error) => console.log(error));
+};

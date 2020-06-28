@@ -29,11 +29,16 @@ const styles = StyleSheet.create({
     marginVertical: 0,
   },
   movieInfo: {
-    bottom: 35,
-    padding: 10,
+    backgroundColor: '#7d43d9',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    backgroundColor: '#7d43d9',
+    bottom: 40,
+  },
+  rate: {
+    flexDirection: 'row',
+  },
+  lang: {
+    flexDirection: 'row',
   },
   ratingtext: {
     color: '#fff',
@@ -43,6 +48,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  langicon: {
+    marginHorizontal: 4,
   },
 });
 export default function Movie(props) {
@@ -59,18 +67,12 @@ export default function Movie(props) {
         <SharedElement id={`item.${item.id}.poster`}>
           <Image source={{uri: item.poster}} style={styles.image} />
         </SharedElement>
-        <SharedElement id={`item.${item.overview}.overview`}>
+        <View>
           <Text style={styles.text}>{item.overview}</Text>
-        </SharedElement>
+        </View>
       </View>
       <View style={styles.movieInfo}>
-        <View
-          styles={{
-            flex: 1,
-            backgroundColor: '#fff',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
+        <View style={styles.rate}>
           <View>
             <AntDesign name="star" color="#fff" size={20} />
           </View>
@@ -78,8 +80,8 @@ export default function Movie(props) {
             <Text style={styles.ratingtext}>{item.vote_average}</Text>
           </View>
         </View>
-        <View>
-          <View>
+        <View style={styles.lang}>
+          <View style={styles.langicon}>
             <FontAwesome name="language" size={24} color="#fff" />
           </View>
           <View>
