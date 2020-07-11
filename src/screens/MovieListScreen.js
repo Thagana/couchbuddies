@@ -22,6 +22,7 @@ export default function MovieListScreen() {
       .then((data) => setMovies(data))
       .catch((error) => console.log(error));
   }, []);
+  console.log(movies);
   return (
     <View>
       <View>
@@ -34,6 +35,10 @@ export default function MovieListScreen() {
             <Trending
               image={`${POSTER_BASE}/w500${item.poster_path}`}
               description={item.overview}
+              title={item.title}
+              released={item.release_date}
+              language={item.original_language}
+              vote_average={item.vote_average}
             />
           )}
           keyExtractor={(item, index) => index.toString()}
