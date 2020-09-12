@@ -2,6 +2,8 @@
 
 A movie recommandation app written in React Native
 
+[!build](https://build.appcenter.ms/v0.1/apps/65a4e7e6-474a-438f-abbc-1cbfb6437f9e/branches/master/badge)
+
 <div style="max-width: 500px;margin: auto;">
     <img src="./app_assets/couch.png" alt="CouchBuddies Logo">
 </div>
