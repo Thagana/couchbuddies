@@ -22,7 +22,6 @@ export default function MovieListScreen() {
       .then((data) => setMovies(data))
       .catch((error) => console.log(error));
   }, []);
-  console.log(movies);
   return (
     <View>
       <View>

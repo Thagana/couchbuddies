@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
 });
 export default function Movie(props) {
   const {item} = props.route.params;
-  console.log(item.backdrop_path);
   return (
     <>
       <View style={styles.conatiner}>

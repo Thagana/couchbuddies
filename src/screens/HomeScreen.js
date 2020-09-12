@@ -37,7 +37,6 @@ export default function HomeScreen(props) {
   useEffect(() => {
     loadPopular()
       .then((response) => {
-        console.log(response);
         setMovieList(response);
       })
       .catch((error) => {
