@@ -1,15 +1,16 @@
 // @flow
 import React, {useEffect} from 'react';
-import {View, ScrollView, Dimensions, StyleSheet, TextInput, TouchableOpacity, Image, ImageBackground, Text} from 'react-native';
+import { View, ScrollView, Dimensions, StyleSheet, TextInput, TouchableOpacity, Image, ImageBackground, Text} from 'react-native';
 import Movie from '../components/MovieItem';
 import Snackbar from 'react-native-snackbar';
 import Carousel from 'react-native-anchor-carousel';
 import Feather from 'react-native-vector-icons/Feather'
 import {loadPopular, searchMovie} from '../configs/app';
-
 import {POSTER_BASE} from '../configs/app';
 import { round } from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
+const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   searchcontainer: {
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
   },
   searchbar: {
     width: '90%',
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   search: {
     height: 60, 
@@ -28,10 +29,11 @@ const styles = StyleSheet.create({
     borderWidth: 1, 
     borderRadius: 20, 
     padding: 20,
-    backgroundColor: 'transparent',
+    backgroundColor: '#fff',
     elevation: 10,
     marginVertical: 10,
-    width: '100%'
+    width: '100%',
+    color: '#000'
   },
   icon :{
     position: "absolute",
@@ -54,12 +56,7 @@ const styles = StyleSheet.create({
     height: 300,
   },
   ImageBg: {
-    flex: 1,
-    resizeMode: 'cover',
-    opacity: 1,
-    width: '100%',
-    height: '100%',
-    justifyContent: "center"
+    flex: 1
   },
   descContainer: {
     flex: 1,
@@ -68,24 +65,40 @@ const styles = StyleSheet.create({
   },
   title: {
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
+  },
+  rating: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
   },
   titleText: {
     color: '#fff',
     fontSize: 25
+  },
+  overviewContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center"
+  },
+  overviewText: {
+    color: '#fff',
+    padding: 2
   }
 });
 
 
-const { width } = Dimensions.get('window');
 
 export default function HomeScreen(props) {
   const [search, setSearch] = React.useState('');
   const [movielist, setMovieList] = React.useState([]);
-  const [description, setDescription] = React.useState({ uri: 'https://avatars1.githubusercontent.com/u/31548358?s=400&u=3c136ffca7b76111e7aa057ec5167718b6f75b25&v=4', name: '' });
+  const [description, setDescription] = React.useState({ uri: 'http://image.tmdb.org/t/p/w500/6CoRTJTmijhBLJTUNoVSUNxZMEI.jpg', name: '' });
   const carouselRef = React.useRef();
 
   const handleSearch = (val) => {
+    console.log(val);
     searchMovie(val.nativeEvent.text)
       .then((response) => {
         setMovieList(response);
@@ -129,7 +142,9 @@ export default function HomeScreen(props) {
           carouselRef.current.scrollToIndex(index)
           setDescription({
             uri: `${POSTER_BASE}/w500/${item.poster_path}`,
-            name: item.title
+            name: item.title,
+            overview: item.overview,
+            rating: item.vote_average
           })
         }}>
           <Image
@@ -140,48 +155,55 @@ export default function HomeScreen(props) {
     );
   }
   return (
-    <ScrollView
-    >
-      <ImageBackground
-        source={{  uri: description.uri }}
-        style={styles.ImageBg}
-        blurRadius={2}
-        imageStyle={{
-          resizeMode: "cover",
-          alignSelf: "flex-end"
-        }}
-      >
-        <View style={styles.searchcontainer}>
-          <View style={styles.searchbar}>
-              <TextInput 
-                  style={styles.search}
-                  onChangeText={text => setSearch(text)}
-                  value={search}
-                  placeholder="Search for a movie"
-                  placeholderTextColor="#fff"
-              />
-              <Feather name="search" color="#fff" size={30} style={styles.icon}/>
+
+        <ImageBackground
+          source={{  uri: description.uri }}
+          style={styles.ImageBg}
+        >
+          <View style={styles.searchcontainer}>
+            <View style={styles.searchbar}>
+                <TextInput 
+                    style={styles.search}
+                    onChangeText={text => setSearch(text)}
+                    value={search}
+                    placeholder="Search for a movie"
+                    placeholderTextColor="#000"
+                    onChange={handleSearch}
+                />
+                  <Feather name="search" color="#000" size={30} style={styles.icon}/>
+            </View>
           </View>
-        </View>
-        <View style={styles.descContainer}>
-          <View style={styles.title}>
-            <Text style={styles.titleText}>{description.name}</Text>
+          <View style={styles.descContainer}>
+            <View style={styles.title}>
+                <Text style={styles.titleText}>{description.name}</Text>
+              </View>
+            <View style={styles.rating}>
+              <Text style={styles.titleText}>{description.rating} </Text><
+                Text style={{
+                fontSize: 10, color: '#fff', top: 6
+              }}>/ 10</Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.carouselContainer}>
-            <Carousel
-                  style={styles.carousel}
-                  data={movielist.results}
-                  renderItem={renderItem}
-                  itemWidth={200}
-                  containerWidth={width - 20} 
-                  separatorWidth={0}
-                  ref={carouselRef}
-                  pagingEnable={false}
-                  minScrollDistance={20}
-              />
-        </View>
-      </ImageBackground>
-    </ScrollView>
+          <View style={styles.carouselContainer}>
+              <Carousel
+                    style={styles.carousel}
+                    data={movielist.results}
+                    renderItem={renderItem}
+                    itemWidth={200}
+                    containerWidth={width - 20} 
+                    separatorWidth={0}
+                    ref={carouselRef}
+                    pagingEnable={false}
+                    minScrollDistance={20}
+                />
+          </View>
+          <View style={styles.overviewContainer}>
+            <View>
+              <Text style={styles.overviewText}>
+                  {description.overview}
+              </Text>
+            </View>
+          </View>
+        </ImageBackground>
   );
 }
