@@ -1,28 +1,28 @@
 // @flow
 import React from 'react';
 import {View, StyleSheet, Text, Image} from 'react-native';
-import {Rating, AirbnbRating} from 'react-native-elements';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import LinearGradient from 'react-native-linear-gradient';
 
-type Props = {
-  image: String,
-  description: String,
-  released: string,
-  title: string,
-  language: string,
-  vote_average: Number,
-};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center"
   },
   image: {
-    height: 200,
-    width: 150,
+    height: 160,
+    width: 130,
     borderRadius: 20,
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    backgroundColor: '#7d43d9',
+    marginVertical: 5,
+    marginHorizontal: 10,
+    borderRadius: 10,
+    padding: 5
+
   },
   text: {
     fontSize: 10,
@@ -33,12 +33,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
   },
   textContainer: {
+    flexDirection: 'column',
     paddingRight: 10,
-    flexWrap: 'wrap',
+    justifyContent: 'space-between'
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#fff'
   },
   lowerRow: {
     flexDirection: 'row',
@@ -49,11 +51,12 @@ const styles = StyleSheet.create({
     width: 200,
   },
 });
-export default function Trending(props: Props) {
+
+export default function Trending(props) {
   const {image, language, title, released, vote_average} = props;
   return (
     <View style={styles.container}>
-      <View style={styles.row}>
+      <LinearGradient style={styles.row} colors={['#4c669f', '#3b5998', '#192f6a']}>
         <View style={styles.imageContainer}>
           <Image source={{uri: image}} style={styles.image} />
         </View>
@@ -63,39 +66,33 @@ export default function Trending(props: Props) {
               {title ? title : 'No title available'}
             </Text>
           </View>
-          <View style={styles.lowerRow}>
-            <Text style={styles.text}>
-              {released ? released : 'no release date'}
-            </Text>
-            <Text style={styles.text}>|</Text>
-            <Text style={styles.text}>
-              {language ? language : 'no language found'}
-            </Text>
-          </View>
-          <View>
-            <Rating
-              type="star"
-              ratingCount={5}
-              imageSize={30}
-              readonly
-              startingValue={vote_average / 2}
-            />
+          <View style={{
+              flexDirection: "row",
+              justifyContent: "space-between"
+          }}>
+             <View>
+                <Text style={{ fontWeight: 'bold', color: '#fff' }}>Movie</Text>
+             </View>
+             <View style={{
+               flexDirection: "row",
+               justifyContent: "center"
+             }}>
+                  <View style={{
+                    marginHorizontal: 1
+                  }}>
+                      <AntDesign name="star" size={20} color="gold" />
+                  </View>
+                  <View>
+                      <Text style={{
+                        color: '#fff'
+                      }}>
+                        {vote_average}
+                      </Text>
+                  </View>
+             </View>
           </View>
         </View>
-      </View>
+      </LinearGradient>
     </View>
   );
-}
-
-{
-  /* <View style={styles.container}>
-<View style={styles.row}>
-  <View style={styles.imageContainer}>
-    <Image source={{uri: image}} style={styles.image} />
-  </View>
-  <View style={styles.textContainer}>
-    <Text style={styles.text}>{description}</Text>
-  </View>
-</View>
-</View> */
 }

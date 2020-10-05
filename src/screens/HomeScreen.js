@@ -1,16 +1,9 @@
 // @flow
 import React, {useEffect} from 'react';
-import { View, ScrollView, Dimensions, StyleSheet, TextInput, TouchableOpacity, Image, ImageBackground, Text} from 'react-native';
-import Movie from '../components/MovieItem';
-import Snackbar from 'react-native-snackbar';
-import Carousel from 'react-native-anchor-carousel';
+import { View, FlatList, StyleSheet, TextInput, TouchableOpacity, Image, ImageBackground, Text} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather'
 import {loadPopular, searchMovie} from '../configs/app';
 import {POSTER_BASE} from '../configs/app';
-import { round } from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   searchcontainer: {
@@ -54,6 +47,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 220,
     height: 300,
+    margin: 2
   },
   ImageBg: {
     flex: 1
@@ -104,10 +98,7 @@ export default function HomeScreen(props) {
         setMovieList(response);
       })
       .catch((error) => {
-        Snackbar.show({
-          text: 'Could not get movies',
-          duration: Snackbar.LENGTH_SHORT,
-        });
+       console.log(error)
       });
   };
 
@@ -117,10 +108,7 @@ export default function HomeScreen(props) {
         setMovieList(response);
       })
       .catch((error) => {
-        Snackbar.show({
-          text: 'Could not get movies',
-          duration: Snackbar.LENGTH_SHORT,
-        });
+       console.log(error);
       });
   }, []);
 
@@ -130,16 +118,12 @@ export default function HomeScreen(props) {
         setMovieList(res);
       })
       .catch((error) => {
-        Snackbar.show({
-          text: 'Could not get movies',
-          duration: Snackbar.LENGTH_SHORT,
-        });
+        console.log(error);
       });
   };
   const renderItem = ({ item, index }) => {
     return (
         <TouchableOpacity onPress={() => {
-          carouselRef.current.scrollToIndex(index)
           setDescription({
             uri: `${POSTER_BASE}/w500/${item.poster_path}`,
             name: item.title,
@@ -185,17 +169,12 @@ export default function HomeScreen(props) {
             </View>
           </View>
           <View style={styles.carouselContainer}>
-              <Carousel
-                    style={styles.carousel}
-                    data={movielist.results}
-                    renderItem={renderItem}
-                    itemWidth={200}
-                    containerWidth={width - 20} 
-                    separatorWidth={0}
-                    ref={carouselRef}
-                    pagingEnable={false}
-                    minScrollDistance={20}
-                />
+              <FlatList
+                  data={movielist.results}
+                  horizontal={true}
+                  renderItem={renderItem}
+                  keyExtractor={(item,index) => index.toString()}
+              />
           </View>
           <View style={styles.overviewContainer}>
             <View>
