@@ -2,6 +2,9 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import Trending from '../components/Trending';
+
+const animationData = require('../../assets/animation/loading.json');
+
 import {API_KEY, POSTER_BASE} from '../configs/app';
 
 const styles = StyleSheet.create({
@@ -16,6 +19,14 @@ const styles = StyleSheet.create({
 
 export default function MovieListScreen() {
   const [movies, setMovies] = useState(null);
+  const defaultOptions = {
+    loop: true,
+    autoplay: true, 
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  };
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`)
       .then((response) => response.json())
@@ -43,8 +54,12 @@ export default function MovieListScreen() {
           keyExtractor={(item, index) => index.toString()}
         />
       ) : (
-        <View>
-          <Text>Loading ....</Text>
+        <View style={{
+          flex: 1,
+          justifyContent: "center",
+          alignContent: "center"
+        }}>
+          <Text>Loading ...</Text>
         </View>
       )}
     </View>
